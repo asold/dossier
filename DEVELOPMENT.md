@@ -6,6 +6,7 @@ Next.js 16 (App Router) + Prisma 7 + PostgreSQL 18, run with Docker Compose and 
 
 ```bash
 cp .env.example .env
+# set POSTGRES_PASSWORD (openssl rand -hex 24) in .env, and the same in DATABASE_URL
 docker compose build
 docker/bin/yarn hash-password   # set DOSSIER_PASSWORD in .env to what it prints
 # set DOSSIER_SECRET (openssl rand -base64 32) in .env
@@ -22,7 +23,7 @@ import { env } from "@/lib/env";
 ```
 
 On every start the `app` container runs `prisma generate`, `prisma migrate deploy`, then `next dev`.
-Postgres is also exposed on `localhost:5432` for host tools, using `DATABASE_URL` from `.env`.
+Postgres is also published on `127.0.0.1:5432` (this machine only) for host tools, using `DATABASE_URL` from `.env`. The app on port 3000 is likewise only reachable from this machine.
 
 ## Yarn
 
